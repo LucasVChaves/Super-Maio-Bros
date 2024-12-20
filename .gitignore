@@ -10,6 +10,20 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
+# Ignorar arquivos dentro da subpasta do projeto Unity
+Super Maio Bros/[Ll]ibrary/
+Super Maio Bros/[Tt]emp/
+Super Maio Bros/[Oo]bj/
+Super Maio Bros/[Bb]uild/
+Super Maio Bros/[Bb]uilds/
+Super Maio Bros/[Ll]ogs/
+Super Maio Bros/[Mm]emoryCaptures/
+Super Maio Bros/*.csproj
+Super Maio Bros/*.unityproj
+Super Maio Bros/*.sln
+Super Maio Bros/*.userprefs
+
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
