@@ -2,31 +2,34 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField]
-    private float moveSpeed = 5f;
+    private float moveSpeed = 7f;
     private Vector2 velocity;
     private Rigidbody2D rbody;
-    private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     void Start() {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update() {
         velocity.x = Input.GetAxisRaw("Horizontal");
         velocity.y = Input.GetAxisRaw("Vertical");
+
+        velocity = velocity.normalized;
+
+        animator.SetFloat("Horizontal", velocity.x);
+        animator.SetFloat("Vertical", velocity.y);
+        animator.SetFloat("Speed", velocity.sqrMagnitude);
+
+        if (velocity.x < 0) {
+            GetComponentInChildren<SpriteRenderer>().flipX = true;
+        } else {
+            GetComponentInChildren<SpriteRenderer>().flipX = false;
+        }
     }
 
     void FixedUpdate() {
         rbody.MovePosition(rbody.position + velocity * moveSpeed * Time.fixedDeltaTime);
-        if (velocity.x > 0) {
-            spriteRenderer.flipX = true;
-        } else if (velocity.x < 0) {
-            spriteRenderer.flipX = false;
-        } else if (velocity.y > 0) {
-            spriteRenderer.flipY = false;
-        } else if (velocity.y < 0) {
-            spriteRenderer.flipY = true;
-        } 
     }
 }
