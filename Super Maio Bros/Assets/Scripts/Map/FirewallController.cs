@@ -28,8 +28,10 @@ public class FirewallController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            Debug.Log("-1 heart");
-            // TODO: Dar dano no player
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            if (playerHealth != null) {
+                playerHealth.TakeDamage(1);
+            }
         }
     }
 }
