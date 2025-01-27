@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -16,17 +17,9 @@ public class PlayerController : MonoBehaviour {
         velocity.x = Input.GetAxisRaw("Horizontal");
         velocity.y = Input.GetAxisRaw("Vertical");
 
-        velocity = velocity.normalized;
-
         animator.SetFloat("Horizontal", velocity.x);
         animator.SetFloat("Vertical", velocity.y);
         animator.SetFloat("Speed", velocity.sqrMagnitude);
-
-        if (velocity.x < 0) {
-            GetComponentInChildren<SpriteRenderer>().flipX = true;
-        } else {
-            GetComponentInChildren<SpriteRenderer>().flipX = false;
-        }
     }
 
     void FixedUpdate() {
