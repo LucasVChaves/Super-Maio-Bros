@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: 4119226490080697988
     second: Bomb_4
+  - first:
+      213: -3851982506454002795
+    second: Bomb_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 116
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -150,8 +153,8 @@ TextureImporter:
       name: Bomb_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
+        x: 16
+        y: 32
         width: 16
         height: 16
       alignment: 0
@@ -160,9 +163,9 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7e6fd662fd05dad449980a98b085b698
+      spriteID: d429f68314a7795e0800000000000000
       internalID: -1902917897002446259
       vertices: []
       indices: 
@@ -172,6 +175,28 @@ TextureImporter:
       name: Bomb_2
       rect:
         serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e109b92349c5fea0800000000000000
+      internalID: -5839540051515997725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bomb_3
+      rect:
+        serializedVersion: 2
         x: 16
         y: 16
         width: 16
@@ -182,16 +207,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: f0d58f0c766c4f7e4ad179a6d3bbfe9b
-      internalID: -5839540051515997725
+      spriteID: dbcdac83bc99ee5b0800000000000000
+      internalID: -5337159410277229379
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bomb_3
+      name: Bomb_4
       rect:
         serializedVersion: 2
         x: 0
@@ -204,16 +229,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a299dfbbcc7bb7afa99e5d82ea9872ce
-      internalID: -5337159410277229379
+      spriteID: 48e93aa0bae6a2930800000000000000
+      internalID: 4119226490080697988
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bomb_4
+      name: Bomb_5
       rect:
         serializedVersion: 2
         x: 16
@@ -226,10 +251,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9c9644bbabc66ac9d8ddabb1ded400bc
-      internalID: 4119226490080697988
+      spriteID: 5935acda1520b8ac0800000000000000
+      internalID: -3851982506454002795
       vertices: []
       indices: 
       edges: []
@@ -238,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e481aeebbe8872a5592323017f047e5b
+    spriteID: 060aed617466df3e4885b2533a23ac75
     internalID: 0
     vertices: []
     indices: 
@@ -253,6 +278,7 @@ TextureImporter:
       Bomb_2: -5839540051515997725
       Bomb_3: -5337159410277229379
       Bomb_4: 4119226490080697988
+      Bomb_5: -3851982506454002795
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
