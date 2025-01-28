@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CrateBehaviour : MonoBehaviour {
@@ -7,16 +8,16 @@ public class CrateBehaviour : MonoBehaviour {
         loot = GetComponent<CrateLoot>();
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            DestroySelf();
-        }
-    }
-
-    public void DestroySelf() {
+    public void Destroy() {
         // Particula()
         // Som()
         loot.rollLoot();
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        StartCoroutine(DestroySelf());
+    }
+
+    IEnumerator DestroySelf() {
+        yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
 }

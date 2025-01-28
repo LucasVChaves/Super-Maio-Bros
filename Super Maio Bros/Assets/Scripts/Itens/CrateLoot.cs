@@ -12,11 +12,9 @@ public class CrateLoot : MonoBehaviour {
         Debug.Log("Roll: " + roll);
 
         if (roll < diamondBias) {
-            Debug.Log("Dropped diamond");
-            //Instantiate(diamondObj, transform.position, transform.localRotation);
+            Instantiate(diamondObj, transform.position, Quaternion.identity);
         } else if (roll < bombBias) {
-            Debug.Log("Dropped bomb");
-            //Instantiate(bombObj, transform.position, transform.localRotation);
+            Instantiate(bombObj, transform.position, Quaternion.identity);
         } else {
             Debug.Log("Dropped nothing");
         }

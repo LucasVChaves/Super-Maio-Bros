@@ -7,6 +7,7 @@ public class BombBehaviour : MonoBehaviour {
     public int explosionRange = 5;
     public LayerMask obstacleLayer;
     private AudioSource audioSource;
+    
     void Start() {
         audioSource = GetComponent<AudioSource>();
         StartCoroutine(Explode());
@@ -41,10 +42,12 @@ public class BombBehaviour : MonoBehaviour {
 
             Collider2D obj = Physics2D.OverlapCircle(targetPos, 1.0f);
             if (obj != null) {
-                Debug.Log("Encontrado: " + obj.gameObject.name + " com tag: " + obj.tag);
                 if (obj.CompareTag("Explodable")) {
-                    Destroy(obj.gameObject);
-                    //Debug.Log("Destruindo: " + obj.gameObject.name);
+                    obj.gameObject.GetComponent<CrateBehaviour>().Destroy();
+                }
+                if (obj.CompareTag("Player")) {
+                    PlayerHealth playerHealth = obj.gameObject.GetComponent<PlayerHealth>();
+                    if (playerHealth != null) playerHealth.TakeDamage(1);
                 }
             }
         }
@@ -63,8 +66,7 @@ public class BombBehaviour : MonoBehaviour {
         Gizmos.color = Color.red;
 
         Vector2[] directions = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
-        foreach (Vector2 dir in directions)
-        {
+        foreach (Vector2 dir in directions) {
             Gizmos.DrawLine(transform.position, (Vector2)transform.position + dir * explosionRange);
         }
     }
