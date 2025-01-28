@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
     public int maxHealth = 3;
+    public AudioClip hurtSFX;
     private int currHealth;
     private AudioSource audioSource;
     void Start() {
@@ -12,7 +13,7 @@ public class PlayerHealth : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         currHealth -= damage;
-        audioSource.Play();
+        audioSource.PlayOneShot(hurtSFX, 1f);
         Debug.Log("Player took damage. Current Health = " + currHealth);
 
         if (currHealth <= 0) {
