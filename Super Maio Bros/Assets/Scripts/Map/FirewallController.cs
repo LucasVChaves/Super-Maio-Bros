@@ -8,6 +8,12 @@ public class FirewallController : MonoBehaviour {
 
     private bool isMovingRight = true;
     private int rightDirCount = 0;
+    private AudioSource audioSource;
+
+    void Start() {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
+    }
 
     void FixedUpdate() {
         Vector3 targetPos = isMovingRight ? (Vector3)endPos : (Vector3)startPos;
