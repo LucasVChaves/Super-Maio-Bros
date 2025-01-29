@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7253662591708414118}
   - component: {fileID: 5040744076135989536}
   - component: {fileID: 7433111581573036880}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Crate
   m_TagString: Explodable
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

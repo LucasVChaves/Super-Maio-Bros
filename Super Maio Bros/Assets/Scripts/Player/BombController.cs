@@ -21,9 +21,12 @@ public class BombController : MonoBehaviour {
     }
 
     void InstantiateBomb() {
+        /*
         Vector3Int cellPos = grid.WorldToCell(transform.position);
         Vector3 spawnPos = grid.CellToWorld(cellPos);
         Instantiate(bombPrefab, spawnPos, Quaternion.identity);
+        */
+        Instantiate(bombPrefab, transform.position, Quaternion.identity);
         currBombCount--;
     }
 }

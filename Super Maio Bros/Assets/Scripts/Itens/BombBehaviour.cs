@@ -5,6 +5,7 @@ public class BombBehaviour : MonoBehaviour {
     public GameObject explosionPrefab;
     public float explosionDelay = 1.5f;
     public int explosionRange = 5;
+    public float explosionRadius = 100.0f;
     public LayerMask obstacleLayer;
     private AudioSource audioSource;
     
@@ -40,15 +41,14 @@ public class BombBehaviour : MonoBehaviour {
 
             Instantiate(explosionPrefab, targetPos, Quaternion.identity);
 
-            Collider2D obj = Physics2D.OverlapCircle(targetPos, 1.0f);
-            if (obj != null) {
-                if (obj.CompareTag("Explodable")) {
-                    obj.gameObject.GetComponent<CrateBehaviour>().Destroy();
-                }
-                if (obj.CompareTag("Player")) {
-                    PlayerHealth playerHealth = obj.gameObject.GetComponent<PlayerHealth>();
-                    if (playerHealth != null) playerHealth.TakeDamage(1);
-                }
+            int layerMask = LayerMask.GetMask("Default");
+            Collider2D obj = Physics2D.OverlapCircle(targetPos, explosionRadius, layerMask);
+            if (obj != null && obj.CompareTag("Explodable")) {
+                //obj.gameObject.GetComponent<CrateBehaviour>().Destroy();
+                Destroy(obj.gameObject);
+            }
+            if (obj != null && obj.CompareTag("Player")) {
+                Debug.Log("boom");
             }
         }
     }
@@ -61,7 +61,7 @@ public class BombBehaviour : MonoBehaviour {
     // Gizmos para debug
     void OnDrawGizmos() {
         Gizmos.color = new Color(1, 0, 0, 0.3f);
-        Gizmos.DrawSphere(transform.position, 0.8f);
+        //Gizmos.DrawWireSphere(transform.position, explosionRadius);
 
         Gizmos.color = Color.red;
 

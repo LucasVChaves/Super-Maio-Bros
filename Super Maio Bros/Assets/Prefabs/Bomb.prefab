@@ -86,6 +86,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 6501506559960069510, guid: 77725e2956737c93a8703b89081e5567, type: 3}
   explosionDelay: 1.5
   explosionRange: 2
+  explosionRadius: 1000
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 8
