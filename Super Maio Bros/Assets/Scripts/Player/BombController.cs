@@ -34,7 +34,8 @@ public class BombController : MonoBehaviour {
 
     void UpdateBombPreview() {
         if (bombPreview == null) return;
-        
+        if (currBombCount <= 0) return;
+
         Vector3Int cellPos = grid.WorldToCell(transform.position);
         Vector3 previewPos = grid.GetCellCenterWorld(cellPos);
         bombPreview.transform.position = previewPos;
