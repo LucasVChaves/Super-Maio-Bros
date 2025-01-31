@@ -4,18 +4,20 @@ using UnityEngine;
 public class BombBehaviour : MonoBehaviour {
     public GameObject explosionPrefab;
     public float explosionDelay = 1.5f;
-    public int explosionRange = 5;
-    public float explosionRadius = 100.0f;
-    public LayerMask obstacleLayer;
+    public int explosionRange = 3;
+    [SerializeField] private LayerMask obstacleLayer;
     private AudioSource audioSource;
     
     void Start() {
         audioSource = GetComponent<AudioSource>();
+        obstacleLayer = LayerMask.GetMask("Obstacle");
         StartCoroutine(Explode());
     }
 
     IEnumerator Explode() {
         yield return new WaitForSeconds(explosionDelay);
+
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         audioSource.Play();
         ExplodeInDirection(Vector2.up);
@@ -30,26 +32,22 @@ public class BombBehaviour : MonoBehaviour {
     }
 
     void ExplodeInDirection(Vector2 dir) {
-        for (int i = 1; i < explosionRange; i++) {
-            Vector2 targetPos = (Vector2)transform.position + dir * i;
+        for (int i = 1; i <= explosionRange; i++) {
+            Vector2 targetPos = (Vector2)transform.position + (dir * i);
+            RaycastHit2D hit = Physics2D.Raycast(targetPos, Vector2.zero, 0f);
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, i, obstacleLayer);
             if (hit.collider != null) {
-                //Debug.Log("Raycast atingiu: " + hit.collider.gameObject.name);
+                Debug.Log("Obstáculo atingido: " + hit.collider.gameObject.name);
+                if (hit.collider.CompareTag("Explodable")) {
+                    hit.collider.GetComponent<CrateBehaviour>().Destroy();
+                }
+                if (hit.collider.CompareTag("Player")) {
+                    hit.collider.GetComponent<PlayerHealth>().TakeDamage(1);
+                }
                 break;
             }
 
             Instantiate(explosionPrefab, targetPos, Quaternion.identity);
-
-            int layerMask = LayerMask.GetMask("Default");
-            Collider2D obj = Physics2D.OverlapCircle(targetPos, explosionRadius, layerMask);
-            if (obj != null && obj.CompareTag("Explodable")) {
-                //obj.gameObject.GetComponent<CrateBehaviour>().Destroy();
-                Destroy(obj.gameObject);
-            }
-            if (obj != null && obj.CompareTag("Player")) {
-                Debug.Log("boom");
-            }
         }
     }
 
@@ -61,7 +59,6 @@ public class BombBehaviour : MonoBehaviour {
     // Gizmos para debug
     void OnDrawGizmos() {
         Gizmos.color = new Color(1, 0, 0, 0.3f);
-        //Gizmos.DrawWireSphere(transform.position, explosionRadius);
 
         Gizmos.color = Color.red;
 
