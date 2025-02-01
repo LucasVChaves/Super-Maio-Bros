@@ -39,6 +39,7 @@ public class PlayerHealth : MonoBehaviour {
         Debug.Log("Player Died");
         // Recarrega a cena, eu acho
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        ScoreManager.Instance.SaveOnPlayerDeath();
     }
 
     IEnumerator changeColorBack() {

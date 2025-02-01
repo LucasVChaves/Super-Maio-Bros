@@ -38,6 +38,7 @@ public class ScoreManager : MonoBehaviour {
     }
 
     public void AddScore(int val) {
+        Debug.Log("Increse score val = " + val);
         currScore += val;
         if (currScore > highScore) {
             highScore = currScore;
@@ -48,7 +49,7 @@ public class ScoreManager : MonoBehaviour {
         currScore -= val;
     }
 
-    public void OnPlayerDeath() {
+    public void SaveOnPlayerDeath() {
         if (currScore > highScore) {
             highScore = currScore;
             SaveHighScore();
