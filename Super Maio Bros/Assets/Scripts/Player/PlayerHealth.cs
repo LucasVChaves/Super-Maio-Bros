@@ -28,11 +28,14 @@ public class PlayerHealth : MonoBehaviour {
         spriteRenderer.color = new Color(255, 0, 0, 255);
         StartCoroutine(changeColorBack());
 
-        Debug.Log("Player took damage. Current Health = " + currHealth);
-
         if (currHealth <= 0) {
             Die();
         }
+    }
+
+    public void Heal(int healing) {
+        currHealth += healing;
+        if (currHealth > maxHealth) currHealth = maxHealth;
     }
 
     private void Die() {

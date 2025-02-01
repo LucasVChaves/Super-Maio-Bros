@@ -9,6 +9,7 @@ public class FirewallController : MonoBehaviour {
     private bool isMovingRight = true;
     private int rightDirCount = 0;
     private AudioSource audioSource;
+    private bool alreadyTriggered = false;
 
     void Start() {
         audioSource = GetComponent<AudioSource>();
@@ -33,6 +34,9 @@ public class FirewallController : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
+        if (alreadyTriggered) return;
+        alreadyTriggered = true;
+        
         if (other.CompareTag("Player")) {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null) {
