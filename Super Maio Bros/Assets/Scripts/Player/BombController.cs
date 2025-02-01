@@ -18,8 +18,8 @@ public class BombController : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space) && currBombCount > 0) {
-            Debug.Log("Bomb Count = " + currBombCount);
             InstantiateBomb();
+            Debug.Log("Bomb Count = " + currBombCount);
             audioSource.PlayOneShot(placeBombSFX, 1f);
         }
         UpdateBombPreview();

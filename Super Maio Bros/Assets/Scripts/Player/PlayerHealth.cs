@@ -23,6 +23,7 @@ public class PlayerHealth : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         currHealth -= damage;
+        ScoreManager.Instance.SubScore(50);
         audioSource.PlayOneShot(hurtSFX, 1f);
         spriteRenderer.color = new Color(255, 0, 0, 255);
         StartCoroutine(changeColorBack());
