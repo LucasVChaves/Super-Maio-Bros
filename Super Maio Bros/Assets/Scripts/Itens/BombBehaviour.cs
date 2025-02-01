@@ -4,7 +4,7 @@ using UnityEngine;
 public class BombBehaviour : MonoBehaviour {
     public GameObject explosionPrefab;
     public float explosionDelay = 1.5f;
-    public int explosionRange = 3;
+    public int explosionRange = 2;
     [SerializeField] private LayerMask obstacleLayer;
     private AudioSource audioSource;
     
