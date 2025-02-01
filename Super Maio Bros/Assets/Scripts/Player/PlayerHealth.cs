@@ -1,9 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
     public int maxHealth = 3;
+    public Sprite[] heartSprites;
+    public Image uiHearts;
     public AudioClip hurtSFX;
     private int currHealth;
     private AudioSource audioSource;
@@ -12,6 +15,10 @@ public class PlayerHealth : MonoBehaviour {
         currHealth = maxHealth;
         audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    void Update() {
+        uiHearts.sprite = heartSprites[currHealth];
     }
 
     public void TakeDamage(int damage) {
