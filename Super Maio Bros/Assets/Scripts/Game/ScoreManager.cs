@@ -69,7 +69,7 @@ public class ScoreManager : MonoBehaviour {
     }
 
     void OnApplicationQuit() {
-        SaveScore(); // Salvar a pontuação ao fechar o jogo
+        SaveScore();
     }
 
     private void SaveScore() {

@@ -1,21 +1,21 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Tilemaps; // ✅ Importa para trabalhar com Tilemaps
+using UnityEngine.Tilemaps;
 
 public class SpawnerScript : MonoBehaviour {
-    public GameObject[] objectsToSpawn; // Objetos a spawnar (caixas, pedras, etc.)
-    public float spawnInterval = 10f; // Tempo entre spawns
-    public int maxObjectsOnMap = 30; // Máximo de caixas no mapa
+    public GameObject[] objectsToSpawn;
+    public float spawnInterval = 10f;
+    public int maxObjectsOnMap = 30;
     public Vector2 spawnAreaMin;
     public Vector2 spawnAreaMax;
-    public float objectRadius = 0.5f; // Raio para verificar colisões
+    public float objectRadius = 0.5f;
 
     void Start() {
-        Tilemap tilemap = FindObjectOfType<Tilemap>(); // 🔹 Busca um Tilemap na cena
+        Tilemap tilemap = FindObjectOfType<Tilemap>();
         if (tilemap != null) {
             BoundsInt tilemapBounds = tilemap.cellBounds;
-            spawnAreaMin = new Vector2(tilemapBounds.xMin, tilemapBounds.yMin); // Ponto inferior esquerdo
-            spawnAreaMax = new Vector2(tilemapBounds.xMax, tilemapBounds.yMax); // Ponto superior direito
+            spawnAreaMin = new Vector2(tilemapBounds.xMin, tilemapBounds.yMin);
+            spawnAreaMax = new Vector2(tilemapBounds.xMax, tilemapBounds.yMax);
         } else {
             Debug.LogWarning("Tilemap não encontrado! Defina a área manualmente.");
             spawnAreaMin = new Vector2(-5, -3);
@@ -29,10 +29,10 @@ public class SpawnerScript : MonoBehaviour {
         while (true) {
             yield return new WaitForSeconds(spawnInterval);
 
-            int currentObjects = GameObject.FindGameObjectsWithTag("Explodable").Length; // Conta caixas
+            int currentObjects = GameObject.FindGameObjectsWithTag("Explodable").Length;
 
             if (currentObjects < maxObjectsOnMap) {
-                int amountToSpawn = Random.Range(3, 6); // Número aleatório entre 3 e 6
+                int amountToSpawn = Random.Range(3, 6);
 
                 for (int i = 0; i < amountToSpawn; i++) {
                     Vector2 spawnPosition = GetValidSpawnPosition();
@@ -47,19 +47,18 @@ public class SpawnerScript : MonoBehaviour {
     }
 
     Vector2 GetValidSpawnPosition() {
-        for (int attempts = 0; attempts < 10; attempts++) { // Tenta spawnar até 10 vezes
+        for (int attempts = 0; attempts < 10; attempts++) {
             float randomX = Random.Range(spawnAreaMin.x, spawnAreaMax.x);
             float randomY = Random.Range(spawnAreaMin.y, spawnAreaMax.y);
             Vector2 potentialPosition = new Vector2(randomX, randomY);
 
-            // Verifica se já tem algo na posição
             Collider2D hit = Physics2D.OverlapCircle(potentialPosition, objectRadius);
 
-            if (hit == null) { // Se não colidiu com nada, retorna a posição válida
+            if (hit == null) {
                 return potentialPosition;
             }
         }
 
-        return Vector2.zero; // Retorna zero se não encontrar posição válida
+        return Vector2.zero;
     }
 }

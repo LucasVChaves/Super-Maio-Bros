@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class BombController : MonoBehaviour {
     public int maxBombCount = 5;
@@ -8,9 +9,10 @@ public class BombController : MonoBehaviour {
     public GameObject bombPreviewPrefab;
     public Grid grid;
     public AudioClip placeBombSFX;
+    public TMP_Text uiBombCount;
     private AudioSource audioSource;
     private GameObject bombPreview;
-    private bool isRecharging = false; // 🔹 Variável para evitar múltiplas recargas ao mesmo tempo
+    private bool isRecharging = false;
 
     void Start() {
         currBombCount = maxBombCount;
@@ -22,10 +24,10 @@ public class BombController : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space) && currBombCount > 0) {
             InstantiateBomb();
-            Debug.Log("Bomb Count = " + currBombCount);
             audioSource.PlayOneShot(placeBombSFX, 1f);
         }
         UpdateBombPreview();
+        UpdateBombUI();
     }
 
     void InstantiateBomb() {
@@ -35,7 +37,7 @@ public class BombController : MonoBehaviour {
         currBombCount--;
 
         if (!isRecharging) { 
-            StartCoroutine(RechargeBombs()); // 🔹 Inicia a recarga apenas se ainda não estiver em andamento
+            StartCoroutine(RechargeBombs());
         }
     }
 
@@ -48,14 +50,15 @@ public class BombController : MonoBehaviour {
         bombPreview.transform.position = previewPos;
     }
 
-    // 🔹 Corrotina para recarregar todas as bombas após 7 segundos
-    IEnumerator RechargeBombs() {
-        isRecharging = true; // Marca que a recarga está ativa
-        Debug.Log("Recarregamento iniciado. Bombas serão restauradas em 7 segundos...");
-        yield return new WaitForSeconds(7f); // Aguarda 7 segundos
+    void UpdateBombUI() {
+        uiBombCount.text = currBombCount.ToString() + " I " + maxBombCount.ToString();
+    }
 
-        currBombCount = maxBombCount; // Recarrega todas as bombas
-        Debug.Log("Todas as bombas foram recarregadas!");
-        isRecharging = false; // Permite um novo recarregamento no futuro
+    IEnumerator RechargeBombs() {
+        isRecharging = true;
+        yield return new WaitForSeconds(7f);
+
+        currBombCount = maxBombCount;
+        isRecharging = false;
     }
 }
