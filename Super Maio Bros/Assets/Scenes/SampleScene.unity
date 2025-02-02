@@ -406,6 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToSpawn:
   - {fileID: 3685057969677980052, guid: 759c12a0145089a098534fb0a48fcdee, type: 3}
+  - {fileID: 3685057969677980052, guid: bddbce1110b8a3023a982435ce13b488, type: 3}
   spawnInterval: 5
   maxObjectsOnMap: 30
   spawnAreaMin: {x: 0, y: 0}
