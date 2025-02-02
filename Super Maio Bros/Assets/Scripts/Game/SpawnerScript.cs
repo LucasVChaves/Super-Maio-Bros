@@ -9,8 +9,11 @@ public class SpawnerScript : MonoBehaviour {
     public Vector2 spawnAreaMin;
     public Vector2 spawnAreaMax;
     public float objectRadius = 0.5f;
+    private AudioSource audioSource;
 
     void Start() {
+        audioSource = GetComponent<AudioSource>();
+
         Tilemap tilemap = FindObjectOfType<Tilemap>();
         if (tilemap != null) {
             BoundsInt tilemapBounds = tilemap.cellBounds;
@@ -40,6 +43,7 @@ public class SpawnerScript : MonoBehaviour {
                     if (spawnPosition != Vector2.zero) {
                         int randomIndex = Random.Range(0, objectsToSpawn.Length);
                         Instantiate(objectsToSpawn[randomIndex], spawnPosition, Quaternion.identity);
+                        audioSource.Play();
                     }
                 }
             }
