@@ -6,6 +6,7 @@ using System.Collections;
 public class ScoreManager : MonoBehaviour {
     public static ScoreManager Instance { get; private set; }
     public TMP_Text uiScoreText;
+    public TMP_Text uiHighscoreText;
     private int currScore = 0;
     private int highScore = 0;
     private string highscorePath;
@@ -21,6 +22,8 @@ public class ScoreManager : MonoBehaviour {
 
         highscorePath = Application.persistentDataPath + "/highscore.txt";
         LoadHighScore();
+        uiHighscoreText.text = "Highscore = " + highScore.ToString();
+        currScore = 0;
         StartCoroutine(IncreaseScoreOverTime());
     }
 
@@ -51,14 +54,6 @@ public class ScoreManager : MonoBehaviour {
             highScore = currScore;
         }
         SaveScore();
-    }
-
-    public int GetScore() {
-        return currScore;
-    }
-
-    public int GetHighScore() {
-        return highScore;
     }
 
     public void CheckHighScore() {

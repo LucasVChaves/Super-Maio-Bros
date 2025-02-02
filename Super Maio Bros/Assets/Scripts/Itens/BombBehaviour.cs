@@ -17,11 +17,9 @@ public class BombBehaviour : MonoBehaviour {
     IEnumerator Explode() {
         yield return new WaitForSeconds(explosionDelay);
 
-        // Instancia a explosão central
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         audioSource.Play();
 
-        // Propaga a explosão em todas as direções
         ExplodeInDirection(Vector2.up);
         ExplodeInDirection(Vector2.down);
         ExplodeInDirection(Vector2.left);
@@ -35,34 +33,26 @@ public class BombBehaviour : MonoBehaviour {
         for (int i = 1; i <= explosionRange; i++) {
             Vector2 targetPos = (Vector2)transform.position + (dir * i);
 
-            // 🔹 Detecta objetos dentro da explosão
             Collider2D[] hits = Physics2D.OverlapCircleAll(targetPos, 0.4f);
 
             foreach (Collider2D hit in hits) {
                 
-                // 💥 Verifica se atingiu uma caixa
                 CrateBehaviour crate = hit.GetComponent<CrateBehaviour>();
                 if (crate != null) {
                     crate.Destroy();
-                    continue; // Sai do loop para não verificar mais esse objeto
+                    continue;
                 }
-
-                // 🪨 Verifica se atingiu uma pedra
                 StoneBehaviour stone = hit.GetComponent<StoneBehaviour>();
                 if (stone != null) {
                     stone.DestroyStone();
-                    continue; // Sai do loop para não verificar mais esse objeto
+                    continue;
                 }
-
-                // 🔥 Verifica se o jogador foi atingido e aplica dano
                 PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
                 if (playerHealth != null) {
                     playerHealth.TakeDamage(1);
-                    Debug.Log("🔥 Jogador atingido pela explosão! 🔥");
                 }
             }
 
-            // Instancia a explosão nesse local
             Instantiate(explosionPrefab, targetPos, Quaternion.identity);
         }
     }
