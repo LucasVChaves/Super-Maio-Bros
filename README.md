@@ -5,6 +5,6 @@ Jogo AAA revolucionário GOTY
 ## TODO
 
 - [ ] Spawn de caixas pelo mapa
-- [ ] Recarga de bombas a cada x segundos
-- [ ] Menu principal
-- [ ] Consertar persistencia do Highscore
+- [X] Recarga de bombas a cada x segundos
+- [X] Menu principal
+- [X] Consertar persistencia do Highscore
