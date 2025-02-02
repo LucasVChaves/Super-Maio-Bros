@@ -15,6 +15,7 @@ public class SpawnerScript : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
 
         Tilemap tilemap = FindObjectOfType<Tilemap>();
+        /*
         if (tilemap != null) {
             BoundsInt tilemapBounds = tilemap.cellBounds;
             spawnAreaMin = new Vector2(tilemapBounds.xMin, tilemapBounds.yMin);
@@ -24,6 +25,9 @@ public class SpawnerScript : MonoBehaviour {
             spawnAreaMin = new Vector2(-5, -3);
             spawnAreaMax = new Vector2(5, 3);
         }
+        */
+        spawnAreaMin = new Vector2(-8, -5);  
+        spawnAreaMax = new Vector2(8, 5);    
 
         StartCoroutine(SpawnObjects());
     }
