@@ -1,12 +1,10 @@
 using UnityEngine;
 using TMPro;
 using System.IO;
-using System.Collections.Generic;
 using System.Collections;
-using System;
 
 public class ScoreManager : MonoBehaviour {
-    public static ScoreManager Instance {get; private set;}
+    public static ScoreManager Instance { get; private set; }
     public TMP_Text uiScoreText;
     private int currScore = 0;
     private int highScore = 0;
@@ -21,7 +19,7 @@ public class ScoreManager : MonoBehaviour {
             return;
         }
 
-        highscorePath = Application.dataPath + "/Data/highscore.txt";
+        highscorePath = Application.persistentDataPath + "/highscore.txt";
         LoadHighScore();
         StartCoroutine(IncreaseScoreOverTime());
     }
@@ -34,11 +32,10 @@ public class ScoreManager : MonoBehaviour {
     }
 
     void Update() {
-        uiScoreText.text = "POINTS = " + Convert.ToString(currScore);
+        uiScoreText.text = "POINTS = " + currScore.ToString();
     }
 
     public void AddScore(int val) {
-        Debug.Log("Increse score val = " + val);
         currScore += val;
         if (currScore > highScore) {
             highScore = currScore;
@@ -52,8 +49,8 @@ public class ScoreManager : MonoBehaviour {
     public void SaveOnPlayerDeath() {
         if (currScore > highScore) {
             highScore = currScore;
-            SaveHighScore();
         }
+        SaveScore();
     }
 
     public int GetScore() {
@@ -67,31 +64,41 @@ public class ScoreManager : MonoBehaviour {
     public void CheckHighScore() {
         if (currScore > highScore) {
             highScore = currScore;
-            SaveHighScore();
         }
+        SaveScore();
     }
 
-    private void SaveHighScore() {
+    void OnApplicationQuit() {
+        SaveScore(); // Salvar a pontuação ao fechar o jogo
+    }
+
+    private void SaveScore() {
         if (!Directory.Exists(Path.GetDirectoryName(highscorePath))) {
             Directory.CreateDirectory(Path.GetDirectoryName(highscorePath));
         }
-        File.WriteAllText(highscorePath, highScore.ToString());
+
+        File.WriteAllText(highscorePath, highScore + ";" + currScore);
     }
 
     private void LoadHighScore() {
         if (File.Exists(highscorePath)) {
             string content = File.ReadAllText(highscorePath);
-            if (int.TryParse(content, out int savedHighScore)) {
+            string[] values = content.Split(';');
+
+            if (values.Length >= 2 && int.TryParse(values[0], out int savedHighScore) && int.TryParse(values[1], out int savedCurrScore)) {
                 highScore = savedHighScore;
+                currScore = savedCurrScore;
             } else {
-                Debug.LogWarning("ERROR AT: " + highscorePath + " - CREATING NEW FILE");
+                Debug.LogWarning("Erro ao carregar pontuação! Criando novo arquivo...");
                 highScore = 0;
-                SaveHighScore();
+                currScore = 0;
+                SaveScore();
             }
         } else {
-            Debug.LogWarning("NO " + highscorePath + " FOUND: CREATING NEW FILE");
+            Debug.LogWarning("Nenhum arquivo de pontuação encontrado! Criando novo arquivo...");
             highScore = 0;
-            SaveHighScore();
+            currScore = 0;
+            SaveScore();
         }
     }
 }
