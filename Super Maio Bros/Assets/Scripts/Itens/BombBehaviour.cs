@@ -7,7 +7,7 @@ public class BombBehaviour : MonoBehaviour {
     public int explosionRange = 2;
     [SerializeField] private LayerMask obstacleLayer;
     private AudioSource audioSource;
-    
+
     void Start() {
         audioSource = GetComponent<AudioSource>();
         obstacleLayer = LayerMask.GetMask("Obstacle");
@@ -17,16 +17,16 @@ public class BombBehaviour : MonoBehaviour {
     IEnumerator Explode() {
         yield return new WaitForSeconds(explosionDelay);
 
+        // Instancia a explosão central
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-
         audioSource.Play();
+
+        // Propaga a explosão em todas as direções
         ExplodeInDirection(Vector2.up);
         ExplodeInDirection(Vector2.down);
         ExplodeInDirection(Vector2.left);
         ExplodeInDirection(Vector2.right);
 
-        // Desliga a parte visual da bomba e deixa o objeto em si ativo
-        // Se eu destruir o objeto da bomba sem isso o audio buga
         transform.GetChild(0).gameObject.SetActive(false);
         StartCoroutine(DestroySelf());
     }
@@ -34,19 +34,28 @@ public class BombBehaviour : MonoBehaviour {
     void ExplodeInDirection(Vector2 dir) {
         for (int i = 1; i <= explosionRange; i++) {
             Vector2 targetPos = (Vector2)transform.position + (dir * i);
-            RaycastHit2D hit = Physics2D.Raycast(targetPos, Vector2.zero, 0f);
 
-            if (hit.collider != null) {
-                Debug.Log("Obstáculo atingido: " + hit.collider.gameObject.name);
-                if (hit.collider.CompareTag("Explodable")) {
-                    hit.collider.GetComponent<CrateBehaviour>().Destroy();
+            // 🔹 Detecta objetos dentro da explosão
+            Collider2D[] hits = Physics2D.OverlapCircleAll(targetPos, 0.4f);
+
+            foreach (Collider2D hit in hits) {
+                if (hit.CompareTag("Explodable")) {
+                    CrateBehaviour crate = hit.GetComponent<CrateBehaviour>();
+                    if (crate != null) {
+                        crate.Destroy();
+                    }
                 }
-                if (hit.collider.CompareTag("Player")) {
-                    hit.collider.GetComponent<PlayerHealth>().TakeDamage(1);
+
+                if (hit.CompareTag("Player")) {
+                    PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
+                    if (playerHealth != null) {
+                        playerHealth.TakeDamage(1);
+                        Debug.Log("🔥 Jogador atingido pela explosão! 🔥");
+                    }
                 }
-                break;
             }
 
+            // Instancia a explosão nesse local
             Instantiate(explosionPrefab, targetPos, Quaternion.identity);
         }
     }
@@ -56,12 +65,8 @@ public class BombBehaviour : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    // Gizmos para debug
     void OnDrawGizmos() {
-        Gizmos.color = new Color(1, 0, 0, 0.3f);
-
         Gizmos.color = Color.red;
-
         Vector2[] directions = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
         foreach (Vector2 dir in directions) {
             Gizmos.DrawLine(transform.position, (Vector2)transform.position + dir * explosionRange);

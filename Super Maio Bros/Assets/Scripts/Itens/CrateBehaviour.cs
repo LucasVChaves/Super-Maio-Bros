@@ -2,22 +2,32 @@ using System.Collections;
 using UnityEngine;
 
 public class CrateBehaviour : MonoBehaviour {
-    CrateLoot loot;
+    private CrateLoot loot;
+    private Collider2D col;
 
     void Start() {
         loot = GetComponent<CrateLoot>();
+        col = GetComponent<Collider2D>();
     }
 
     public void Destroy() {
-        // Particula()
-        // Som()
-        loot.rollLoot();
+        Debug.Log("Caixa destruída: " + gameObject.name);
+
+        loot.rollLoot(); // Dropa loot, se aplicável
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        col.enabled = false; // Desativa o colisor para evitar interações futuras
+        
         StartCoroutine(DestroySelf());
     }
 
     IEnumerator DestroySelf() {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Explosion")) {
+            Destroy();
+        }
     }
 }
