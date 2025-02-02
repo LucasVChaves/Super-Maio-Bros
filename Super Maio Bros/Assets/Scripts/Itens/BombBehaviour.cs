@@ -39,19 +39,26 @@ public class BombBehaviour : MonoBehaviour {
             Collider2D[] hits = Physics2D.OverlapCircleAll(targetPos, 0.4f);
 
             foreach (Collider2D hit in hits) {
-                if (hit.CompareTag("Explodable")) {
-                    CrateBehaviour crate = hit.GetComponent<CrateBehaviour>();
-                    if (crate != null) {
-                        crate.Destroy();
-                    }
+                
+                // 💥 Verifica se atingiu uma caixa
+                CrateBehaviour crate = hit.GetComponent<CrateBehaviour>();
+                if (crate != null) {
+                    crate.Destroy();
+                    continue; // Sai do loop para não verificar mais esse objeto
                 }
 
-                if (hit.CompareTag("Player")) {
-                    PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
-                    if (playerHealth != null) {
-                        playerHealth.TakeDamage(1);
-                        Debug.Log("🔥 Jogador atingido pela explosão! 🔥");
-                    }
+                // 🪨 Verifica se atingiu uma pedra
+                StoneBehaviour stone = hit.GetComponent<StoneBehaviour>();
+                if (stone != null) {
+                    stone.DestroyStone();
+                    continue; // Sai do loop para não verificar mais esse objeto
+                }
+
+                // 🔥 Verifica se o jogador foi atingido e aplica dano
+                PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
+                if (playerHealth != null) {
+                    playerHealth.TakeDamage(1);
+                    Debug.Log("🔥 Jogador atingido pela explosão! 🔥");
                 }
             }
 
