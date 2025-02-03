@@ -15,4 +15,4 @@ As builds, tanto para Windows quanto para Linux, estão disponíveis na aba de r
 - [X] Spawn de caixas pelo mapa
 - [X] Recarga de bombas a cada x segundos
 - [X] Menu principal
-- [ ] Consertar persistencia do Highscore
+- [X] Consertar persistencia do Highscore
