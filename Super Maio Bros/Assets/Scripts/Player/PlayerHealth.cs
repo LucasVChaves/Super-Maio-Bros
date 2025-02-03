@@ -59,34 +59,33 @@ public class PlayerHealth : MonoBehaviour {
     private void Die() {
         Debug.Log("Player Died");
 
-        // 🎵 PAUSA a música do jogo e toca a de Game Over 🎵
         if (musicPlayer != null) {
-            musicPlayer.Pause();  // 🔴 PAUSA a música em vez de parar
+            musicPlayer.Pause(); 
         }
 
         if (gameOverMusic != null) {
-            audioSource.PlayOneShot(gameOverMusic);  // 🎵 Toca música de Game Over separadamente
+            audioSource.PlayOneShot(gameOverMusic);
         }
 
-        // 🔴 Exibir painel de Game Over
+        
         gameOverPanel.SetActive(true);
-        Time.timeScale = 0; // 🔴 Pausa o jogo enquanto o jogador está morto
+        Time.timeScale = 0;
         ScoreManager.Instance.SaveOnPlayerDeath();
     }
 
     private void RestartGame() {
         Debug.Log("Restarting Game...");
 
-        // 🔴 Para qualquer música que esteja tocando (Game Over ou outra)
+        
         audioSource.Stop();
 
-        // 🎵 Para tudo e toca o som de restart antes de reiniciar 🎵
+        
         if (musicPlayer != null) {
-            musicPlayer.Stop(); // 🔴 Para qualquer música (inclusive Game Over)
+            musicPlayer.Stop();
         }
 
         if (restartSound != null) {
-            audioSource.PlayOneShot(restartSound); // Toca o som de transição
+            audioSource.PlayOneShot(restartSound);
             StartCoroutine(WaitForRestart(restartSound.length));
         } else {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -94,12 +93,12 @@ public class PlayerHealth : MonoBehaviour {
     }
 
     IEnumerator WaitForRestart(float waitTime) {
-        yield return new WaitForSecondsRealtime(waitTime); // Espera o áudio terminar
-        Time.timeScale = 1; // 🔴 Volta o tempo ao normal
+        yield return new WaitForSecondsRealtime(waitTime); 
+        Time.timeScale = 1; 
 
-        // 🎵 Retoma a música original do jogo 🎵
+        
         if (musicPlayer != null) {
-            musicPlayer.Play(); // 🔥 Agora reinicia a música do jogo
+            musicPlayer.Play();
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

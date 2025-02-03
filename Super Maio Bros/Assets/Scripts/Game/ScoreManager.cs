@@ -96,4 +96,5 @@ public class ScoreManager : MonoBehaviour {
             SaveScore();
         }
     }
+
 }

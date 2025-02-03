@@ -13,7 +13,7 @@ public class CrateBehaviour : MonoBehaviour {
     public void Destroy() {
         Debug.Log("Caixa destruída: " + gameObject.name);
 
-        loot.rollLoot(); // Dropa loot, se aplicável
+        loot.rollLoot(); // Dropa loot
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         col.enabled = false; // Desativa o colisor para evitar interações futuras
         
